@@ -1,0 +1,25 @@
+#include <unordered_map>
+#include <algorithm>
+#include <iostream>
+#include <iomanip>
+#include <fstream>
+#include <cstdlib>
+#include <sstream>
+#include <string>
+#include <bitset>
+#include <vector>
+#include <random>
+#include <chrono>
+#include <ctime>
+
+using std::ostringstream;
+using std::unordered_map;
+using std::ifstream;
+using std::ofstream;
+using std::size_t;
+using std::bitset;
+using std::string;
+using std::cout;
+using std::cin;
+using std::endl;
+using std::to_string;
