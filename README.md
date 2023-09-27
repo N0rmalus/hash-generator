@@ -89,7 +89,7 @@ function main()
 
 ## Programos kompiliavimo laikas nuo input'o eilučių kiekio :)
 
-|  Eilučių sk.      |  Laikas (s )  |
+|  Eilučių sk.      |  Laikas (s)  |
 |-------------------|---------------|
 |  **100**          |  0.133044s    |
 |  **500**          |  0.051012s    |
