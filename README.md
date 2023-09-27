@@ -86,3 +86,15 @@ function main()
     else
         print "Invalid choice"
 ```
+
+--
+
+## Programos kompiliavimo laikas nuo input'o eilučių kiekio :)
+
+|  Eilučių sk.      |  Laikas (s )  |
+|-------------------|---------------|
+|  **100**          |  0.133044s    |
+|  **500**          |  0.051012s    |
+|  **1 500**        |  0.164037s    |
+|  **6 000**        |  0.670775s    |
+|  **10 000**       |  1.013003s    |
