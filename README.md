@@ -87,8 +87,6 @@ function main()
         print "Invalid choice"
 ```
 
---
-
 ## Programos kompiliavimo laikas nuo input'o eilučių kiekio :)
 
 |  Eilučių sk.      |  Laikas (s )  |
