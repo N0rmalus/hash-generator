@@ -1,4 +1,5 @@
 #include <unordered_map>
+#include <functional>
 #include <algorithm>
 #include <iostream>
 #include <iomanip>
@@ -10,16 +11,26 @@
 #include <vector>
 #include <random>
 #include <chrono>
+#include <random>
 #include <ctime>
+#include <map>
 
 using std::ostringstream;
 using std::unordered_map;
+using std::random_device;
+using std::stringstream;
 using std::ifstream;
 using std::ofstream;
+using std::mt19937;
 using std::size_t;
+using std::vector;
 using std::bitset;
 using std::string;
+using std::hash;
 using std::cout;
 using std::cin;
+using std::hex;
 using std::endl;
+using std::setw;
+using std::setfill;
 using std::to_string;

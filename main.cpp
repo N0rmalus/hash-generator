@@ -1,5 +1,6 @@
 #include "libs.h"
-#include "headers.h"
+
+void processBinaryInput(bool fromFile);
 
 int main() {
     string fileRead;

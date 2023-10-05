@@ -2,97 +2,135 @@
 
 Paprasta simbolių hašinimo programa, kurioje gaunama išvestis yra 256 bitų arba 64 simbolių dešimtainis kodas.
 
-### Šios programos pseudo kodas
+## v0.2 (naujausia)
+Nuo šiol įvestis ir išvestis yra nebesaugoma **saved.dat** ir hašinta įvestis yra labiau apsaugota.
+
+### Programos pseudo kodas
 
 ```
-function loadSavedData(filename)
-    data = empty unordered map
-    open the file specified by filename for reading as savedFile
+Main program:
+    Initialize fileRead as a string
 
-    if savedFile is not found
-        print an error message
-        return an empty map
+    Do:
+        Display user prompt for file input
+        Read fileRead from user
 
-    while there are lines in savedFile
-        read binaryCode and hexCode from the current line
-        add binaryCode and hexCode to the data map
+        If fileRead indicates reading from a file Then
+            Call processBinaryInput with file input mode
+            Break
+        Else If fileRead indicates manual input Then
+            Call processBinaryInput with manual input mode
+            Break
+        Else
+            Display error message for invalid input
+            Continue
+        End If
+    While true
 
-    close savedFile
-    return data
+ProcessBinaryInput(inputMode):
+    Initialize binaryRepresentation as a string
+    Initialize input as a string
 
-function processBinaryInput(fromFile)
-    open a file named "saved.dat" in append mode as write
+    If inputMode is file input Then
+        binaryRepresentation = Call readBinaryFromFile with input argument
+    Else If inputMode is manual input Then
+        binaryRepresentation = Call convertTextToBinary with input argument
+    End If
 
-    initialize the random number generator with the current time
+    If length of binaryRepresentation is less than a threshold Then
+        binaryRepresentation = Call padBinaryRepresentationShort with binaryRepresentation and target length
+    Else
+        binaryRepresentation = Call padBinaryRepresentationLong with binaryRepresentation and target length
+    End If
 
-    sHashavimas = current high-resolution time
+    hexadecimalRepresentation = Call generateHexadecimalRepresentation with binaryRepresentation and input as arguments
 
-    binaryRepresentation = ""
-    randomBinaryRepresentation = ""
+    Display the result
 
-    if fromFile is true
-        open a file named "input.txt" for reading as read
+ReadBinaryFromFile(input):
+    Initialize binaryRepresentation as a string
+    Initialize file as a string
+    Initialize symbol as a character
 
-        if read is not found
-            print an error message
-            return
+    Do:
+        Display available file list
+        Read user-selected file
 
-        while there are characters in read
-            symbol = read the next character
-            convert symbol to an 8-bit binary string
-            append the binary string to binaryRepresentation
+        If the file exists Then
+            Read the file content character by character
+            Convert each character to binary and append to binaryRepresentation
+            Close the file
 
-            generate a random bit and append it to randomBinaryRepresentation
+            Set input to include file information and content
+            Exit loop
+        Else
+            Display file not found error
+        End If
+    While true
 
-        close read
-    else
-        prompt the user to input some text
+    Return binaryRepresentation
 
-        for every entered symbol 
-            convert symbol to an 8-bit binary string 
-            append the binary string to binaryRepresentation
+ConvertTextToBinary(input):
+    Initialize binaryRepresentation as a string
+    Initialize textInput as a string
 
-            generate a random bit and append it to randomBinaryRepresentation
+    Display user prompt for text input
+    Read user input as text
 
-    if randomBinaryRepresentation is longer than 256 bits
-        trim randomBinaryRepresentation to 256 bits
+    For each character c in text Do
+        Convert c to binary and append to binaryRepresentation
+    End For
 
-    while randomBinaryRepresentation is shorter than 256 bits
-        generate a random bit and append it to randomBinaryRepresentation
+    Set input to include text input
 
-    hexadecimalRepresentation = ""
+    Return binaryRepresentation
 
-    for each 4-bit nibble in randomBinaryRepresentation
-        convert the nibble to an integer
-        find the corresponding hexadecimal character and append it to hexadecimalRepresentation
+PadBinaryRepresentationShort(binaryRepresentation, targetLength):
+    While length of binaryRepresentation is less than targetLength Do
+        Calculate a pad character based on the current length
+        Convert the pad character to binary and append to binaryRepresentation
+    End While
 
-    savedData = loadSavedData("saved.dat")
+    Return binaryRepresentation
 
-    if binaryRepresentation is found in savedData
-        print "Output: " followed by the corresponding hexadecimal code
-    else
-        write a new line to the "saved.dat" file containing binaryRepresentation and hexadecimalRepresentation
-        close write
-        print "Output: " followed by hexadecimalRepresentation
+PadBinaryRepresentationLong(binaryRepresentation, targetLength):
+    Initialize padChar as a character
 
-function main()
-    prompt the user to enter 'Y' to read from a file or 'N' to enter manually
-    read the user's choice into fileRead
+    For each position in binaryRepresentation until reaching the target length Do
+        Calculate a pad character based on the current length
+        Convert the pad character to binary and append to binaryRepresentation
+    End For
 
-    if fileRead is 'Y' or 'y'
-        call processBinaryInput with fromFile set to true
-    else if fileRead is 'N' or 'n'
-        call processBinaryInput with fromFile set to false
-    else
-        print "Invalid choice"
+    Return binaryRepresentation
+
+GenerateHexadecimalRepresentation(binaryRepresentation, input):
+    Initialize hexadecimalRepresentation as a string
+
+    Initialize a random number generator with a seed based on input data
+    Create a list of indexes and shuffle them
+    Rearrange binary data based on shuffled indexes
+    Convert rearranged binary data to hexadecimal representation
+    Limit hexadecimalRepresentation to a fixed length
+
+    Return hexadecimalRepresentation
 ```
 
-## Programos kompiliavimo laikas nuo input'o eilučių kiekio :)
+|  Įvedimas (input)    |  Išvedimas                                                         |  Laikas (s)  |
+|----------------------|--------------------------------------------------------------------|--------------|
+|  lietuva             |  5d216c5505796119296d767d74090d015965cd6171256975651d752d15511169  |  0s          |
+|  Lietuva             |  512d7d75756d61657974cd71257669550d65155d11056929591d194c09016121  |  0s          |
+|  "Konstitucija.txt"  |  6e6e744cc46f6a79b36e7373736c61696f6e756969626b6b6f6f5673692c7269  |  0.000024s   |
+|  "2500.txt"          |  3d266954683722476b7e720a6d2c5e3c3c47622577626b3d4e6c384f37454367  |  0.001031s   |
 
-|  Eilučių sk.      |  Laikas (s)  |
-|-------------------|---------------|
-|  **100**          |  0.133044s    |
-|  **500**          |  0.051012s    |
-|  **1 500**        |  0.164037s    |
-|  **6 000**        |  0.670775s    |
-|  **10 000**       |  1.013003s    |
+---
+
+### Išvada
+- Programos skaitymas iš failo su daug eilučių ( > 2000 ) užtrunka ilgiau
+
+---
+
+**main.cpp** - pagrindinis programos failas.
+
+**funcs.cpp** - papildoma programos dalis, kurioje laikomi funkcijų aprašymai.
+
+**libs.h** - failas, kuriame saugomos visos bibliotekos ir jų pagrindinės funkcijos, kurios yra reikalingos šiai programai veikti.
