@@ -119,13 +119,18 @@ GenerateHexadecimalRepresentation(binaryRepresentation, input):
 |----------------------|--------------------------------------------------------------------|--------------|
 |  lietuva             |  5d216c5505796119296d767d74090d015965cd6171256975651d752d15511169  |  0s          |
 |  Lietuva             |  512d7d75756d61657974cd71257669550d65155d11056929591d194c09016121  |  0s          |
+|                      |  0d3d2d796929610171555939517505250919355d494d65452141151db17d116d  |  0s          |
 |  "Konstitucija.txt"  |  6e6e744cc46f6a79b36e7373736c61696f6e756969626b6b6f6f5673692c7269  |  0.000024s   |
 |  "2500.txt"          |  3d266954683722476b7e720a6d2c5e3c3c47622577626b3d4e6c384f37454367  |  0.001031s   |
+|  "240000.txt"        |  345a5650524c7862666577376e435464724c343542774a584f78316b506b6857  |  0.000999s   |
+|  "li2000.txt"        |  7565724f6f63736375732065746e61616173206974747473737320747470656d  |  0.003508s   |
 
 ---
 
 ### Išvada
-- Programos skaitymas iš failo su daug eilučių ( > 2000 ) užtrunka ilgiau
+- Programos skaitymas iš failo su daug eilučių ( > 2000 ) yra lėtas
+- Hašinimo išvestis yra konstantinio ilgio (256 bitų, 64 simbolių ilgio)
+- Funckija yra deterministinė, t.y., ta pati įvestis - ta pati išvestis
 
 ---
 
