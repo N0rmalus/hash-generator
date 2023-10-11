@@ -1,4 +1,5 @@
 #include <unordered_map>
+#include <unordered_set>
 #include <functional>
 #include <algorithm>
 #include <iostream>
@@ -31,6 +32,9 @@ using std::cout;
 using std::cin;
 using std::hex;
 using std::endl;
+using std::left;
 using std::setw;
+using std::right;
 using std::setfill;
 using std::to_string;
+

@@ -125,12 +125,30 @@ GenerateHexadecimalRepresentation(binaryRepresentation, input):
 |  "240000.txt"        |  345a5650524c7862666577376e435464724c343542774a584f78316b506b6857  |  0.000999s   |
 |  "li2000.txt"        |  7565724f6f63736375732065746e61616173206974747473737320747470656d  |  0.003508s   |
 
+### Išvesties atsapurimas kolizijai
+|  Porų sk. / simbolių sk.  |  Kolizijų skaičius  |
+|---------------------------|---------------------|
+|  **25 000 / 10**          |          0          |
+|  **25 000 / 100**         |          0          |
+|  **25 000 / 500**         |          0          |
+|  **25 000 / 1000**        |          0          |
+
+### Išvesties lavinos efektas
+|  Porų sk. / simbolių sk.  |  Hexų (MIN / MAX)  |  Bitų (MIN / MAX)  |  Vidurkis HEX / BIT    |
+|---------------------------|--------------------|--------------------|------------------------|
+|  **25 000 / 10**          |  1.6% / 35.9%      |  24.9% / 99.6%     |  18.7% / 62.3%         |
+|  **25 000 / 100**         |  0% / 29.7%        |  4.9% / 99.9%      |  14.8% / 52.4%         |
+|  **25 000 / 500**         |  0% / 31.3%        |  1.4% / 99.9%      |  15.6% / 50.7%         |
+|  **25 000 / 1000**        |  0% / 28.1%        |  0.8% / 99.9%      |  14.1% / 50.4%         |
+
 ---
 
 ### Išvada
 - Programos skaitymas iš failo su daug eilučių ( > 2000 ) yra lėtas
 - Hašinimo išvestis yra konstantinio ilgio (256 bitų, 64 simbolių ilgio)
 - Funckija yra deterministinė, t.y., ta pati įvestis - ta pati išvestis
+- Funkcija yra atspari kolizijai
+- Lavinos efektas labiausiai matomas hexo lygmenyje
 
 ---
 
