@@ -133,7 +133,7 @@ GenerateHexadecimalRepresentation(binaryRepresentation, input):
 |  **25 000 / 500**         |          0          |
 |  **25 000 / 1000**        |          0          |
 
-### Išvesties lavinos efektas
+### Išvesties lavinos efektas (vienodumas)
 |  Porų sk. / simbolių sk.  |  Hexų (MIN / MAX)  |  Bitų (MIN / MAX)  |  Vidurkis HEX / BIT    |
 |---------------------------|--------------------|--------------------|------------------------|
 |  **25 000 / 10**          |  1.6% / 35.9%      |  24.9% / 99.6%     |  18.7% / 62.3%         |
