@@ -125,7 +125,7 @@ void processBinaryInput(bool fromFile) {
     cout << endl << "Isvestis: " << hexadecimalRepresentation << endl;
     // cout << "Laikas: " << tHashing.count() << "s." << endl;
 }
-void differenceCalcByte(string firstInput, string secondInput, double& minDiff, double& maxDiff) {
+void differenceCalcHex(string firstInput, string secondInput, double& minDiff, double& maxDiff) {
     int identicalCharacters = 0;
     for (size_t i = 0; i < firstInput.length(); i++)
         if (firstInput[i] == secondInput[i])
@@ -135,7 +135,7 @@ void differenceCalcByte(string firstInput, string secondInput, double& minDiff, 
         maxDiff = identicalCharacters;
     if(identicalCharacters < minDiff)
         minDiff = identicalCharacters;
-} void differenceCalcHex(string firstInput, string secondInput, double& minDiff, double& maxDiff) {
+} void differenceCalcByte(string firstInput, string secondInput, double& minDiff, double& maxDiff) {
     int identicalCharacters = 0;
     for (size_t i = 0; i < firstInput.length(); i++)
         if (firstInput[i] == secondInput[i])
@@ -146,13 +146,32 @@ void differenceCalcByte(string firstInput, string secondInput, double& minDiff, 
     if(identicalCharacters < minDiff)
         minDiff = identicalCharacters;
 }
+string convertHexToBinary(const string& hexRepresentation) {
+    string binaryString = "";
+    for(char c : hexRepresentation) {
+        int digit;
+        if(c >= '0' && c <= '9') {
+            digit = c - '0';
+        }else if (c >= 'a' && c <= 'f') {
+            digit = 10 + (c - 'a');
+        }else if (c >= 'A' && c <= 'F') {
+            digit = 10 + (c - 'A');
+        } else {
+            cout << "Netinkamas simbolis: " << c << endl;
+            return "";
+        }
+        binaryString += bitset<4>(digit).to_string();
+    }
+    return binaryString;
+}
 void readAndConvertBinaryFromFile() {
     string file;
     string firstInput, secondInput;
     string firstInputBinary, secondInputBinary;
+    string firstHexBinary, secondHexBinary;
     string seed, seed2;
-    int differentPairs = 0, identicalCharacters = 0;
-    double minDiffByte = 64, maxDiffByte = 0;
+    int differentPairs = 0;
+    double minDiffByte = 256, maxDiffByte = 0;
     double minDiffHex = 64, maxDiffHex = 0;
     
     do {
@@ -198,14 +217,18 @@ void readAndConvertBinaryFromFile() {
                 string firstHexadecimalRepresentation = generateHexadecimalRepresentation(firstInputBinary, seed);
                 string secondHexadecimalRepresentation = generateHexadecimalRepresentation(secondInputBinary, seed2);
 
+                string firstHexBinary = convertHexToBinary(firstHexadecimalRepresentation);
+                string secondHexBinary = convertHexToBinary(secondHexadecimalRepresentation);
+
                 // Suskaičiuoti, kiek yra išvestų vienodų porų
                 if (firstHexadecimalRepresentation == secondHexadecimalRepresentation)
                     differentPairs++;
 
-                differenceCalcByte(firstInputBinary, secondInputBinary, minDiffByte, maxDiffByte);
                 differenceCalcHex(firstHexadecimalRepresentation, secondHexadecimalRepresentation, minDiffHex, maxDiffHex);
+                differenceCalcByte(firstHexBinary, secondHexBinary, minDiffByte, maxDiffByte);
 
-                cout << firstHexadecimalRepresentation << " : " << secondHexadecimalRepresentation << endl;
+                // cout << firstHexadecimalRepresentation << " : " << secondHexadecimalRepresentation << endl;
+                // cout << firstHexBinary << " : " << secondHexBinary << endl;
             }
             read.close();
             cout << "-----------------------------------------------------------------------" << endl;
@@ -213,13 +236,13 @@ void readAndConvertBinaryFromFile() {
 
             int columnWidth = 15;
             cout << left << setw(columnWidth) << "Min (HEX / BIT)" << right << setw(columnWidth) << minDiffHex / 64 * 100 << "% / ";
-            cout << minDiffByte / firstInputBinary.length() * 100 << "%" << endl;
+            cout << minDiffByte / 256 * 100 << "%" << endl;
 
             cout << left << setw(columnWidth) << "Max (HEX / BIT)" << right << setw(columnWidth) << maxDiffHex / 64 * 100 << "% / ";
-            cout << maxDiffByte / firstInputBinary.length() * 100 << "%" << endl;
+            cout << maxDiffByte / 256 * 100 << "%" << endl;
 
             cout << left << setw(columnWidth) << "Avg (HEX / BIT)" << right << setw(columnWidth) << (minDiffHex / 64 * 100 + maxDiffHex / 64 * 100) / 2 << "% / ";
-            cout << (minDiffByte / firstInputBinary.length() * 100 + maxDiffByte / firstInputBinary.length() * 100) / 2 << "%" << endl;
+            cout << (minDiffByte / 256 * 100 + maxDiffByte / 256 * 100) / 2 << "%" << endl;
 
             break;
         }
